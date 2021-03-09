@@ -6,8 +6,7 @@
  */
 'use strict';
 
-const { verify: JWTVerify, refresh: JWTRefresh, sign: JWTSign } = require('./lib/jwt');
+const { verify: jwtVerify, sign: jwtSign } = require('./lib/jwt');
 
-exports.JWTVerify = JWTVerify;
-exports.JWTSign = JWTSign;
-exports.JWTRefresh = JWTRefresh;
+exports.jwtVerify = jwtVerify;
+exports.jwtSign = jwtSign;

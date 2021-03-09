@@ -6,9 +6,9 @@
  */
 'use strict';
 
-const { JWT, AJV } = require('./lib/constants');
-const { inject } = require('brick-engine');
+// const jwt = require('./lib/jwt');
 
 module.exports = engine => {
-
+  //   jwt.setup(engine);
+  return engine;
 };
