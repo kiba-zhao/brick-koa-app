@@ -6,9 +6,9 @@
  */
 'use strict';
 
-// const jwt = require('./lib/jwt');
+const jwt = require('./lib/jwt');
 
 module.exports = engine => {
-  //   jwt.setup(engine);
+  jwt.setup(engine);
   return engine;
 };

@@ -6,7 +6,16 @@
  */
 'use strict';
 
+const { ENGINE } = require('brick-engine');
+
 exports.jwt = {
   default: { key: 'jwt', secret: 'asdf123', signOpts: { expiresIn: 5 * 60 }, verifyOpts: { maxAge: 5 * 60 } },
-  simple: { key: 'jwt', secret: '123asdf', signOpts: { expiresIn: 5 * 60 } },
+  simple: {
+    key: 'jwt', secret: '123asdf', signOpts: { expiresIn: 5 * 60 },
+    module: { id: 'services', required: true, transform: _ => _.jwt },
+  },
+};
+
+exports[ENGINE] = {
+  modules: { services: { patterns: 'services/**/*.js' } },
 };

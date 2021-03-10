@@ -96,6 +96,75 @@ describe('simple.test.js', () => {
         .expect(401, done);
     });
 
+    it('get /simple: 401 with basic', done => {
+
+      const body = { yahaha: faker.random.word() };
+      const config = CONFIG.jwt;
+      const token = jwt.sign(body, config.default.secret, config.default.signOpts);
+
+      request(app)
+        .get('/simple')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Basic ${token}`)
+        .expect('WWW-Authenticate', /Bearer/)
+        .expect(401, done);
+    });
+
+
+    it('put /simple: 401', done => {
+
+      const body = { yahaha: faker.random.word() };
+      const config = CONFIG.jwt;
+      const token = jwt.sign(body, config.simple.secret, config.simple.signOpts);
+
+      request(app)
+        .put('/simple')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('WWW-Authenticate', /Bearer/)
+        .expect(401, done);
+    });
+
+    it('put /simple', done => {
+
+      const body = { userId: faker.random.word() };
+      const config = CONFIG.jwt;
+      const token = jwt.sign(body, config.simple.secret, config.simple.signOpts);
+
+      request(app)
+        .put('/simple')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('Content-Type', /json/)
+        .expect(res => {
+          for (const key in body) {
+            expect(res.body[key]).toEqual(body[key]);
+          }
+        })
+        .expect(200, done);
+    });
+
+
+    it('patch /simple', done => {
+
+      const body = { userId: faker.random.word(), iat: 1615353633 };
+      const config = CONFIG.jwt;
+      const token = jwt.sign(body, config.simple.secret, config.simple.signOpts);
+
+      request(app)
+        .patch('/simple')
+        .set('Accept', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('Content-Type', /json/)
+        .expect(res => {
+          for (const key in body) {
+            expect(res.body[key]).toEqual(body[key]);
+          }
+        })
+        .expect(200, done);
+    });
+
+
   });
 
 });

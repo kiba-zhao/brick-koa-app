@@ -24,7 +24,15 @@ class Simple {
     ctx.body = payload;
   }
 
+  put(ctx) {
+    const payload = ctx.state.jwt;
+    ctx.body = payload;
+  }
 
+  patch(ctx) {
+    const payload = ctx.state.jwt;
+    ctx.body = payload;
+  }
 }
 
 module.exports = Simple;
@@ -32,3 +40,5 @@ module.exports = Simple;
 controller(module.exports, { path: '/simple' });
 jwtSign(module.exports);
 jwtVerify(module.exports, { properties: [ 'get' ] });
+jwtVerify(module.exports, { name: 'simple', property: 'put' });
+jwtVerify(module.exports, { name: 'simple', property: 'patch', passthrough: 'jwtError' });
