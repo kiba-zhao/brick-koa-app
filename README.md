@@ -108,6 +108,41 @@ jwtVerify(module.exports, { name: 'simple', property: 'put' });
 jwtVerify(module.exports, { name: 'simple', property: 'patch', passthrough: 'jwtError' });
 ```
 
+##### jwtSign(target,opts) #####
+给ctx注入jwt签名方法
+
+**target**
+路由功能对象的构建方法
+
+**opts**
+签名可选项参数
+
+* opts.name {String | Symbol}: 配置名称,默认为default
+* opts.property {String | Symbol}: 生效目标对象成员方法
+* opts.properties {Array<String | Symbol>}: 生效目标对象成员方法
+* opts.key {String | Symbol}: 签名函数注入到ctx上的方法名称
+* opts.secret {String}: 签名密钥
+* opts.privateKey {String | Buffer}: 签名密钥
+* opts.signOpts {Object}: 签名可选项，详细请参考jsonwebtoken中sign方法参数说明
+
+##### jwtVerify(target,opts) #####
+增加验证jwt token方法
+
+**target**
+路由功能对象的构建方法
+
+**opts**
+验证token可选项参数
+
+* opts.name {String | Symbol}: 配置名称,默认为default
+* opts.property {String | Symbol}: 生效目标对象成员方法
+* opts.properties {Array<String | Symbol>}: 生效目标对象成员方法
+* opts.key {String | Symbol}: payload注入到ctx.state上的属性名
+* opts.passthrough {String | Symbol}: error注入到ctx.state上的属性名
+* opts.secret {String}: 验证密钥
+* opts.publicKey {String | Buffer}: 验证密钥
+* opts.verifyOpts {Object}: 验证可选项，详细请参考jsonwebtoken中verify方法参数说明
+
 #### 附加模块 ####
 jwt一般只对token有效性进行验证,例如在过期前作废的token,就需要额外的检查功能来实现．
 

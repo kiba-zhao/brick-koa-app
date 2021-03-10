@@ -7,8 +7,10 @@
 'use strict';
 
 const jwt = require('./lib/jwt');
+const ajv = require('./lib/ajv');
 
 module.exports = engine => {
   jwt.setup(engine);
+  ajv.setup(engine);
   return engine;
 };

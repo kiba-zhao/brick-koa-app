@@ -7,6 +7,9 @@
 'use strict';
 
 const { verify: jwtVerify, sign: jwtSign } = require('./lib/jwt');
+const { validate } = require('./lib/ajv');
 
 exports.jwtVerify = jwtVerify;
 exports.jwtSign = jwtSign;
+
+exports.validate = validate;

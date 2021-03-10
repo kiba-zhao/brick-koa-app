@@ -19,3 +19,7 @@ exports.jwt = {
 exports[ENGINE] = {
   modules: { services: { patterns: 'services/**/*.js' } },
 };
+
+exports.ajv = {
+  patterns: 'schemas/**/*.js'
+};
