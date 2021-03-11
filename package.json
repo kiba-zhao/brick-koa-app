@@ -11,7 +11,7 @@
     "lint": "eslint --fix .",
     "check": "npm run build && npm run lint",
     "test": "npm run check && jest --coverage --env=node --detectOpenHandles",
-    "test:debug": "node --inspect-brk node_modules/jest --runInBand test/**/*.test.js",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "watch": "jest --watch"
   },
   "files": [

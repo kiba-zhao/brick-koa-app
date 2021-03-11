@@ -21,5 +21,5 @@ exports[ENGINE] = {
 };
 
 exports.ajv = {
-  patterns: 'schemas/**/*.js'
+  patterns: 'schemas/**/*.js',
 };

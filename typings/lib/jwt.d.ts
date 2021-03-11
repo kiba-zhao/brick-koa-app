@@ -23,11 +23,11 @@ export type VerifyOpts = {
      */
     passthrough?: string | Symbol;
     /**
-     * 加密密钥
+     * 验证密钥
      */
     secret?: string;
     /**
-     * 加密公钥
+     * 验证公钥
      */
     publicKey?: string | Buffer;
     /**
@@ -56,15 +56,15 @@ export type SignOpts = {
      */
     key?: string | Symbol;
     /**
-     * 加密密钥
+     * 签名密钥
      */
     secret?: string;
     /**
-     * 加密私钥
+     * 签名私钥
      */
     privateKey?: string | Buffer;
     /**
-     * 验证可选项，详细请参考jsonwebtoken中sign方法参数说明
+     * 签名可选项，详细请参考jsonwebtoken中sign方法参数说明
      */
     signOpts?: any;
 };
@@ -76,8 +76,8 @@ export type SignOpts = {
  * @property {Array<String | Symbol>} [properties] 生效目标对象成员方法
  * @property {String | Symbol} [key] payload注入到ctx.state的key
  * @property {String | Symbol} [passthrough] 验证异常注入到ctx.state的key
- * @property {String} [secret] 加密密钥
- * @property {String | Buffer} [publicKey] 加密公钥
+ * @property {String} [secret] 验证密钥
+ * @property {String | Buffer} [publicKey] 验证公钥
  * @property {Object} [verifyOpts] 验证可选项，详细请参考jsonwebtoken中verify方法参数说明
  */
 /**
@@ -94,9 +94,9 @@ export function verify(target: any, opts: VerifyOpts): any;
  * @property {String | Symbol} [property] 生效目标对象成员方法
  * @property {Array<String | Symbol>} [properties] 生效目标对象成员方法
  * @property {String | Symbol} [key] 签名函数注入到ctx上的方法名称
- * @property {String} [secret] 加密密钥
- * @property {String | Buffer} [privateKey] 加密私钥
- * @property {Object} [signOpts] 验证可选项，详细请参考jsonwebtoken中sign方法参数说明
+ * @property {String} [secret] 签名密钥
+ * @property {String | Buffer} [privateKey] 签名私钥
+ * @property {Object} [signOpts] 签名可选项，详细请参考jsonwebtoken中sign方法参数说明
  */
 /**
  * 签名方法

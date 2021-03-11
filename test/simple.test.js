@@ -36,6 +36,7 @@ describe('simple.test.js', () => {
     const fn = setup(done);
     inject(fn, { deps: [ KOA ] });
     engine.use(fn);
+
   });
 
   afterAll(done => {
@@ -45,9 +46,9 @@ describe('simple.test.js', () => {
     server.close(done);
   });
 
-  describe('simple', () => {
+  describe('jwt simple', () => {
 
-    it('POST /simple', done => {
+    it('post /simple', done => {
 
       const body = { [faker.random.word()]: faker.random.word() };
       const config = CONFIG.jwt;
@@ -164,7 +165,94 @@ describe('simple.test.js', () => {
         .expect(200, done);
     });
 
+  });
+
+  describe('ajv simple', () => {
+
+    it('get /validator', done => {
+      const query = { code: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .get('/validator')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, { query, method: 'get' }, done);
+    });
+
+    it('get /validator : 422', done => {
+      const query = { code: ' ', [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .get('/validator')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect(422, done);
+    });
+
+    it('post /validator', done => {
+      const body = { code: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .post('/validator')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201, { body, method: 'post' }, done);
+    });
+
+    it('post /validator : 422', done => {
+      const body = { [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .post('/validator')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect(422, done);
+    });
+
+    it('delete /validator', done => {
+      const query = { code: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .del('/validator')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect(204, done);
+    });
+
+    it('delete /validator : 422', done => {
+      const query = { code: ' ', [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .del('/validator')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect(422, done);
+    });
+
+    it('post /validator', done => {
+      const body = { code: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .put('/validator')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, { body, method: 'put' }, done);
+    });
+
+    it('post /validator : 422', done => {
+      const body = { [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .put('/validator')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect(422, done);
+    });
 
   });
+
 
 });

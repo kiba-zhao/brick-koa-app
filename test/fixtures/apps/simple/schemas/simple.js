@@ -9,15 +9,24 @@
 const { inject } = require('brick-engine');
 
 module.exports = {
-  $schema: "http://json-schema.org/schema#",
-  title: "simple schema",
-  type: "object",
+  $schema: 'http://json-schema.org/schema#',
+  $id: 'simple',
+  definitions: {
+    code: {
+      type: 'string',
+      pattern: '^\\S+$',
+    },
+  },
+  title: 'simple schema',
+  type: 'object',
   properties: {
-    id: {
-      type: "string",
-      pattern: "^[A-Fa-f0-9]{24,24}$"
-    }
-  }
+    query: {
+      type: 'object',
+      properties: {
+        code: { $ref: '#/definitions/code' },
+      },
+    },
+  },
 };
 
 inject(module.exports, { name: 'simple1' });

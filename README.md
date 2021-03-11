@@ -18,7 +18,7 @@ npm install --save brick-koa-app
 // {cwd}/node_modules/{xxx engine}/plugin.js
 
 exports.adapterKoa = {
-    package:'brick-koa-app
+    package:'brick-koa-app'
 };
 ```
 
@@ -169,7 +169,106 @@ inject(module.exports, { name: 'jwt' });
 ```
 
 ### validate格式检查 ###
+[ajv](https://github.com/ajv-validator/ajv)是使用json schema的数据验证工具．brick-koa-app提供注解方法,实现web的请求内容验证.
 
+#### 配置 ####
+
+``` javascript
+// {cwd}/config/*.js
+// {cwd}/node_modules/{xxx engine}/config/*.js
+// {cwd}/node_modules/{xxx plugin}/config/*.js
+
+exports.ajv = {
+    // json schema文件模块匹配
+    patterns: 'schemas/**/*.js',
+    // 文件模块可选项
+    opts:{},
+    // ajv对象构建参数,详细请参考ajv文档
+    ...
+};
+```
+
+#### 示例 ####
+
+``` javascript
+// {cwd}/controllers/*.js
+// {cwd}/node_modules/{xxx engine}/controllers/*.js
+// {cwd}/node_modules/{xxx plugin}/controllers/*.js
+
+const { controller } = require('brick-koa-adapter');
+const { validate } = require('brick-koa-app');
+
+const Schema = {
+  $schema: 'http://json-schema.org/schema#',
+  type: 'object',
+  properties: {
+    request: {
+      type: 'object',
+      properties: {
+        body: {
+          type: 'object',
+          properties: {
+            code: { $ref: 'simple#/definitions/code' },
+          },
+          required: ['code'],
+        },
+      },
+    },
+  },
+};
+
+class Validator {
+
+  async get(ctx) {
+    const { query } = ctx;
+    ctx.body = { query, method: 'get' };
+    ctx.status = 200;
+  }
+
+  async post(ctx) {
+    ctx.body = { body: ctx.request.body, method: 'post' };
+    ctx.status = 201;
+  }
+
+  async put(ctx) {
+    const { query } = ctx;
+    ctx.body = { body: ctx.request.body, method: 'put' };
+    ctx.status = 200;
+  }
+
+  async delete(ctx) {
+    ctx.status = 204;
+  }
+}
+
+module.exports = Validator;
+
+controller(module.exports, { path: '/validator' });
+
+//　给get方法添加请求内容验证
+validate(module.exports, { name: 'simple1', property: 'get' });
+//　给post方法添加请求内容验证
+validate(module.exports, { schema: Schema, properties: ['post'] });
+//　给delete,put方法添加请求内容验证
+validate(module.exports, { schemas: { delete: 'simple1', put: Schema } });
+
+```
+
+#### validate(target,opts) ####
+给方法添加web请求内容验证处理功能
+
+**target**
+路由功能对象的构建方法
+
+**opts**
+请求验证可选项参数
+
+* opts.name {String | Symbol}: schema文件注入的名字
+* opts.schema {Object}: schema对象
+* opts.schemas {Object.<String | Symbol,String | Symbol|Object>}: schema字典对象,key与target对象的成员函数匹配
+* opts.property {String | Symbol}: 生效目标对象成员方法
+* opts.properties {Array<String | Symbol>}: 生效目标对象成员方法
+* opts.key {String | Symbol}: 验证结果注入到ctx.state上的属性名称
 
 ## Documentations ##
 使用`jsdoc`生成注释文档
