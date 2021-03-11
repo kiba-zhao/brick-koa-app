@@ -6,8 +6,6 @@
  */
 'use strict';
 
-const { ENGINE } = require('brick-engine');
-
 exports.jwt = {
   default: { key: 'jwt', secret: 'asdf123', signOpts: { expiresIn: 5 * 60 }, verifyOpts: { maxAge: 5 * 60 } },
   simple: {
@@ -16,7 +14,7 @@ exports.jwt = {
   },
 };
 
-exports[ENGINE] = {
+exports.engine = {
   modules: { services: { patterns: 'services/**/*.js' } },
 };
 
