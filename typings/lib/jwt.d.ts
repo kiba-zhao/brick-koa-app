@@ -81,7 +81,7 @@ export type SignOpts = {
  * @property {Object} [verifyOpts] 验证可选项，详细请参考jsonwebtoken中verify方法参数说明
  */
 /**
- * 验证方法
+ * jwt验证注释
  * @param {Any} target 目标对象
  * @param {VerifyOpts} opts jwt验证可选项
  * @return {Any} 目标对象
@@ -99,7 +99,7 @@ export function verify(target: any, opts: VerifyOpts): any;
  * @property {Object} [signOpts] 签名可选项，详细请参考jsonwebtoken中sign方法参数说明
  */
 /**
- * 签名方法
+ * jwt签名注释
  * @param {Any} target 目标对象
  * @param {SignOpts} opts jwt可选项
  * @return {Any} 目标对象

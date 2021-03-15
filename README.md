@@ -109,7 +109,7 @@ jwtVerify(module.exports, { name: 'simple', property: 'patch', passthrough: 'jwt
 ```
 
 ##### jwtSign(target,opts) #####
-给ctx注入jwt签名方法
+jwt签名注释．注释功能会给ctx增加sign函数.
 
 **target**
 路由功能对象的构建方法
@@ -126,7 +126,7 @@ jwtVerify(module.exports, { name: 'simple', property: 'patch', passthrough: 'jwt
 * opts.signOpts {Object}: 签名可选项，详细请参考jsonwebtoken中sign方法参数说明
 
 ##### jwtVerify(target,opts) #####
-增加验证jwt token方法
+jwt验证注释.验证http header中Authorization,验证失败或异常http status返回401.
 
 **target**
 路由功能对象的构建方法
@@ -255,7 +255,7 @@ validate(module.exports, { schemas: { delete: 'simple1', put: Schema } });
 ```
 
 #### validate(target,opts) ####
-给方法添加web请求内容验证处理功能
+数据格式验证注释函数，验证失败http status返回422.
 
 **target**
 路由功能对象的构建方法
@@ -269,6 +269,147 @@ validate(module.exports, { schemas: { delete: 'simple1', put: Schema } });
 * opts.property {String | Symbol}: 生效目标对象成员方法
 * opts.properties {Array<String | Symbol>}: 生效目标对象成员方法
 * opts.key {String | Symbol}: 验证结果注入到ctx.state上的属性名称
+
+### ACL ###
+根据业务模块处理的结果，进行访问控制.不允许访问http status返回403.
+
+#### 配置 ####
+
+``` javascript
+// {cwd}/config/*.js
+// {cwd}/node_modules/{xxx engine}/config/*.js
+// {cwd}/node_modules/{xxx plugin}/config/*.js
+
+exports.acl = {
+    default:{
+        // 业务模块依赖信息
+        module: { id: 'services', required: true, transform: _ => _.acl },
+        // 业务模块可选参数
+        ...
+    }
+};
+```
+
+#### 示例 ####
+
+``` javascript
+// {cwd}/controllers/*.js
+// {cwd}/node_modules/{xxx engine}/controllers/*.js
+// {cwd}/node_modules/{xxx plugin}/controllers/*.js
+
+const { controller } = require('brick-koa-adapter');
+const { acl } = require('brick-koa-app');
+
+class Simple {
+
+  post(ctx) {
+    const payload = ctx.request.body;
+    const token = ctx.jwt(payload);
+    ctx.status = 201;
+    ctx.body = { ...payload, token };
+  }
+
+  get(ctx) {
+    const payload = ctx.state.jwt;
+    ctx.status = 200;
+    ctx.body = payload;
+  }
+}
+
+module.exports = Simple;
+
+controller(module.exports, { path: '/simple' });
+
+//　给get方法添加访问控制,使用key为simple1的配置内容作为默认配置.
+acl(module.exports, { name: 'simple1', property: 'get' });
+//　给post方法添加访问控制,使用key为default的配置内容作为默认配置.
+acl(module.exports, { properties: ['post'] });
+```
+
+#### acl(target,opts) ####
+访问控制注释函数，验证失败http status返回403.
+
+**target**
+路由功能对象的构建方法
+
+**opts**
+请求验证可选项参数
+
+* opts.name {String | Symbol}: 使用默认配置名称
+* opts.property {String | Symbol}: 生效目标对象成员方法
+* opts.properties {Array<String | Symbol>}: 生效目标对象成员方法
+* opts.payload {Object.<String | Symbol,String>}: 业务函数参数的映射对象
+
+### Rate Limit ###
+根据业务模块处理的结果，对请求进行限制，达到或超过限定的请求量http status返回429.
+
+
+#### 配置 ####
+
+``` javascript
+// {cwd}/config/*.js
+// {cwd}/node_modules/{xxx engine}/config/*.js
+// {cwd}/node_modules/{xxx plugin}/config/*.js
+
+exports.rateLimit = {
+    default:{
+        // 业务模块依赖信息
+        module: { id: 'services', required: true, transform: _ => _.rateLimit },
+        // 业务模块可选参数
+        ...
+    }
+};
+```
+
+#### 示例 ####
+
+``` javascript
+// {cwd}/controllers/*.js
+// {cwd}/node_modules/{xxx engine}/controllers/*.js
+// {cwd}/node_modules/{xxx plugin}/controllers/*.js
+
+const { controller } = require('brick-koa-adapter');
+const { rateLimit } = require('brick-koa-app');
+
+class Simple {
+
+  post(ctx) {
+    const payload = ctx.request.body;
+    const token = ctx.jwt(payload);
+    ctx.status = 201;
+    ctx.body = { ...payload, token };
+  }
+
+  get(ctx) {
+    const payload = ctx.state.jwt;
+    ctx.status = 200;
+    ctx.body = payload;
+  }
+}
+
+module.exports = Simple;
+
+controller(module.exports, { path: '/simple' });
+
+//　给get方法添加流量限制,使用key为simple1的配置内容作为默认配置.
+rateLimit(module.exports, { name: 'simple1', property: 'get' });
+//　给post方法添加流量,使用key为default的配置内容作为默认配置.
+rateLimit(module.exports, { properties: ['post'] });
+```
+
+#### rateLimit(target,opts) ####
+流量限制注释函数，验证失败http status返回403.
+
+**target**
+路由功能对象的构建方法
+
+**opts**
+请求验证可选项参数
+
+* opts.name {String | Symbol}: 使用默认配置名称
+* opts.property {String | Symbol}: 生效目标对象成员方法
+* opts.properties {Array<String | Symbol>}: 生效目标对象成员方法
+* opts.payload {Object.<String | Symbol,String>}: 业务函数参数的映射对象
 
 ## Documentations ##
 使用`jsdoc`生成注释文档

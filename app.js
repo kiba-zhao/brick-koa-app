@@ -8,9 +8,15 @@
 
 const jwt = require('./lib/jwt');
 const ajv = require('./lib/ajv');
+const acl = require('./lib/acl');
+const rateLimit = require('./lib/rateLimit');
 
 module.exports = engine => {
+
   jwt.setup(engine);
   ajv.setup(engine);
+  acl.setup(engine);
+  rateLimit.setup(engine);
+
   return engine;
 };

@@ -254,5 +254,99 @@ describe('simple.test.js', () => {
 
   });
 
+  describe('acl simple', () => {
+
+    it('get /acl', done => {
+      const query = { acl: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .get('/acl')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, { query, method: 'get' }, done);
+    });
+
+    it('get /acl : 403', done => {
+      const query = { [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .get('/acl')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect(403, done);
+    });
+
+    it('post /acl', done => {
+      const body = { acl: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .post('/acl')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201, { body, method: 'post' }, done);
+    });
+
+    it('post /acl : 403', done => {
+      const body = { [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .post('/acl')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect(403, done);
+    });
+
+  });
+
+  describe('rate limit simple', () => {
+
+    it('get /rate-limit', done => {
+      const query = { limit: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .get('/rate-limit')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, { query, method: 'get' }, done);
+
+    });
+
+    it('get /rate-limit', done => {
+      const query = { [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .get('/rate-limit')
+        .query(query)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(429, done);
+    });
+
+    it('post /rate-limit', done => {
+      const body = { limit: faker.random.word(), [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .post('/rate-limit')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201, { body, method: 'post' }, done);
+    });
+
+    it('post /rate-limit', done => {
+      const body = { [faker.random.word()]: faker.random.word() };
+
+      request(app)
+        .post('/rate-limit')
+        .send(body)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(429, done);
+    });
+
+  });
 
 });

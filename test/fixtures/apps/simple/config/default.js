@@ -21,3 +21,11 @@ exports.engine = {
 exports.ajv = {
   patterns: 'schemas/**/*.js',
 };
+
+exports.acl = {
+  default: { module: { id: 'services', required: true, transform: _ => _.acl } },
+};
+
+exports.rateLimit = {
+  default: { module: { id: 'services', required: true, transform: _ => _.rateLimit } },
+};

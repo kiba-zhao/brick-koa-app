@@ -26,6 +26,10 @@ export type ValidateOpts = {
      * 验证结果注入到ctx.state的key
      */
     key?: string | Symbol;
+    /**
+     * 业务函数参数的映射对象
+     */
+    payload?: any;
 };
 /**
  * ajv验证可选想
@@ -36,9 +40,10 @@ export type ValidateOpts = {
  * @property {String | Symbol} [property] 生效目标对象成员方法
  * @property {Array<String | Symbol>} [properties] 生效目标对象成员方法
  * @property {String | Symbol} [key] 验证结果注入到ctx.state的key
+ * @property {Object.<String | Symbol,String>} [payload] 业务函数参数的映射对象
  */
 /**
- * 验证注释方法
+ * 数据格式验证注释函数
  * @param {Any} target 目标对象
  * @param {ValidateOpts} opts 验证可选想
  * @return {Any} 目标对象
