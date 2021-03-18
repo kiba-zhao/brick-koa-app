@@ -59,8 +59,8 @@ exports.jwt = {
 
 ``` javascript
 // {cwd}/controllers/*.js
-// {cwd}/node_modules/{xxx engine}/controllers/*.js
-// {cwd}/node_modules/{xxx plugin}/controllers/*.js
+// {cwd}/node_modules/{xxx engine}/app/controllers/*.js
+// {cwd}/node_modules/{xxx plugin}/app/controllers/*.js
 
 const { controller } = require('brick-koa-adapter');
 const { JWTVerify,JWTSign } = require('brick-koa-app');
@@ -148,8 +148,8 @@ jwt一般只对token有效性进行验证,例如在过期前作废的token,就�
 
 ```javascript
 // {cwd}/services/*.js
-// {cwd}/node_modules/{xxx engine}/services/*.js
-// {cwd}/node_modules/{xxx plugin}/services/*.js
+// {cwd}/node_modules/{xxx engine}/app/services/*.js
+// {cwd}/node_modules/{xxx plugin}/app/services/*.js
 
 const { inject } = require('brick-engine');
 
@@ -192,8 +192,8 @@ exports.ajv = {
 
 ``` javascript
 // {cwd}/controllers/*.js
-// {cwd}/node_modules/{xxx engine}/controllers/*.js
-// {cwd}/node_modules/{xxx plugin}/controllers/*.js
+// {cwd}/node_modules/{xxx engine}/app/controllers/*.js
+// {cwd}/node_modules/{xxx plugin}/app/controllers/*.js
 
 const { controller } = require('brick-koa-adapter');
 const { validate } = require('brick-koa-app');
@@ -365,8 +365,8 @@ exports.rateLimit = {
 
 ``` javascript
 // {cwd}/controllers/*.js
-// {cwd}/node_modules/{xxx engine}/controllers/*.js
-// {cwd}/node_modules/{xxx plugin}/controllers/*.js
+// {cwd}/node_modules/{xxx engine}/app/controllers/*.js
+// {cwd}/node_modules/{xxx plugin}/app/controllers/*.js
 
 const { controller } = require('brick-koa-adapter');
 const { rateLimit } = require('brick-koa-app');
@@ -415,8 +415,8 @@ rateLimit(module.exports, { properties: ['post'] });
 使用`jsdoc`生成注释文档
 
 ``` shell
-git clone https://github.com/kiba-zhao/brick-koa-adapter.git
-cd brick-koa-adapter
+git clone https://github.com/kiba-zhao/brick-koa-app.git
+cd brick-koa-app
 npm install
 npm run docs
 open docs/index.html
