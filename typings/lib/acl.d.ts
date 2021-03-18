@@ -31,7 +31,7 @@ export type ACLOpts = {
  * 访问控制注释函数
  * @param {Any} target 目标对象
  * @param {ACLOpts} opts 可选项
- * @returns {Any} 目标象对
+ * @return {Any} 目标象对
  */
 export function acl(target: any, opts: ACLOpts): any;
 export function setup(engine: any): any;

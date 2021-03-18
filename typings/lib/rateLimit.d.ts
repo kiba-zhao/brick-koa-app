@@ -31,7 +31,7 @@ export type RateLimitOpts = {
  * 限流注释函数
  * @param {Any} target 目标对象
  * @param {RateLimitOpts} opts 可选项
- * @returns {Any} 目标对象
+ * @return {Any} 目标对象
  */
 export function rateLimit(target: any, opts: RateLimitOpts): any;
 export function setup(engine: any): any;

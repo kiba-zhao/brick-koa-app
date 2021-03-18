@@ -7,7 +7,7 @@
 'use strict';
 
 const { controller } = require('brick-koa-adapter');
-const { rateLimit } = require('../../../../..');
+const { rateLimit } = require('../../../../../..');
 
 class RateLimit {
 

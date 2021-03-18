@@ -7,7 +7,7 @@
 'use strict';
 
 const { controller } = require('brick-koa-adapter');
-const { validate } = require('../../../../..');
+const { validate } = require('../../../../../..');
 
 const Schema = {
   $schema: 'http://json-schema.org/schema#',

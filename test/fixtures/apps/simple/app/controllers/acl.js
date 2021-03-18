@@ -7,7 +7,7 @@
 'use strict';
 
 const { controller } = require('brick-koa-adapter');
-const { acl } = require('../../../../..');
+const { acl } = require('../../../../../..');
 
 class ACL {
 

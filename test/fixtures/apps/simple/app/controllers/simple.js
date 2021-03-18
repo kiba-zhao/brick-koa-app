@@ -7,7 +7,7 @@
 'use strict';
 
 const { controller } = require('brick-koa-adapter');
-const { jwtVerify, jwtSign } = require('../../../../..');
+const { jwtVerify, jwtSign } = require('../../../../../..');
 
 class Simple {
 

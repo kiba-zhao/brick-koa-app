@@ -15,11 +15,11 @@ exports.jwt = {
 };
 
 exports.engine = {
-  modules: { services: { patterns: 'services/**/*.js' } },
+  modules: { services: { patterns: 'app/services/**/*.js' } },
 };
 
 exports.ajv = {
-  patterns: 'schemas/**/*.js',
+  patterns: 'app/schemas/**/*.js',
 };
 
 exports.acl = {
