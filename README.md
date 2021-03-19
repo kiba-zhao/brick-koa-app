@@ -17,7 +17,7 @@ npm install --save brick-koa-app
 // {cwd}/plugin.js
 // {cwd}/node_modules/{xxx engine}/plugin.js
 
-exports.adapterKoa = {
+exports.koaApp = {
     package:'brick-koa-app'
 };
 ```
@@ -58,7 +58,7 @@ exports.jwt = {
 #### 示例 ####
 
 ``` javascript
-// {cwd}/controllers/*.js
+// {cwd}/app/controllers/*.js
 // {cwd}/node_modules/{xxx engine}/app/controllers/*.js
 // {cwd}/node_modules/{xxx plugin}/app/controllers/*.js
 
@@ -180,7 +180,7 @@ inject(module.exports, { name: 'jwt' });
 
 exports.ajv = {
     // json schema文件模块匹配
-    patterns: 'schemas/**/*.js',
+    patterns: 'app/schemas/**/*.js',
     // 文件模块可选项
     opts:{},
     // ajv对象构建参数,详细请参考ajv文档
@@ -191,7 +191,7 @@ exports.ajv = {
 #### 示例 ####
 
 ``` javascript
-// {cwd}/controllers/*.js
+// {cwd}/app/controllers/*.js
 // {cwd}/node_modules/{xxx engine}/app/controllers/*.js
 // {cwd}/node_modules/{xxx plugin}/app/controllers/*.js
 
@@ -293,7 +293,7 @@ exports.acl = {
 #### 示例 ####
 
 ``` javascript
-// {cwd}/controllers/*.js
+// {cwd}/app/controllers/*.js
 // {cwd}/node_modules/{xxx engine}/controllers/*.js
 // {cwd}/node_modules/{xxx plugin}/controllers/*.js
 
@@ -364,7 +364,7 @@ exports.rateLimit = {
 #### 示例 ####
 
 ``` javascript
-// {cwd}/controllers/*.js
+// {cwd}/app/controllers/*.js
 // {cwd}/node_modules/{xxx engine}/app/controllers/*.js
 // {cwd}/node_modules/{xxx plugin}/app/controllers/*.js
 
